@@ -29,14 +29,31 @@ export default class Controller {
 	}
 
 	addItem(title) {
-		this.store.insert({
-			id: Date.now(),
-			title,
-			completed: false
-		}, () => {
-			this.view.clearNewTodo();
-			this._filter(true);
-		});
+		/***  Task 02 - prevent duplicate ToDo titles ***/ 
+		// console.log('current todos: ', todos);
+		let todos = this.store.getLocalStorage();
+		let found = todos.find(item => item.title == title);
+
+		if(!found){
+			/***  Task 10 - remove '<>' from title ***/ 
+			let fixTitle = title;
+			fixTitle = fixTitle?.replace(/</g, "");
+			fixTitle = fixTitle?.replace(/>/g, "");
+			// console.log('title = ', title);
+			// console.log('fixTitle = ', fixTitle);
+
+			this.store.insert({
+				id: Date.now(),
+				title: fixTitle,
+				completed: false
+			}, () => {
+				this.view.clearNewTodo();
+				this._filter(true);
+			});
+		}
+		else{
+			alert("You already have that task, no need to add it again ;)");
+		}
 	}
 
 	editItemSave(id, title) {
@@ -95,7 +112,7 @@ export default class Controller {
 		}
 
 		this.store.count((total, active, completed) => {
-			this.view.setItemsLeft(0);
+			this.view.setItemsLeft(total);
 			this.view.setClearCompletedButtonVisibility(completed);
 
 			this.view.setCompleteAllCheckbox(completed === total);

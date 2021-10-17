@@ -16,6 +16,9 @@ export default class View {
     this.$toggleAll = query('.toggle-all');
     this.$newTodo = query('.new-todo');
 
+    /***  Task 06 - focusing on new todo input ***/ 
+    this.$newTodo.focus();
+
     delegateEvent(this.$todoList, 'li label', 'dblclick', ({ target }) => {
       this.editItem(target);
     });
@@ -73,6 +76,7 @@ export default class View {
 
   setItemComplete(id, completed) {
     const listItem = query(`[data-id="${id}"]`);
+    // console.log('listItem = ', listItem);
 
     if (!listItem) {
       return;

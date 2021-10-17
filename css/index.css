@@ -146,6 +146,11 @@ body {
 	padding: 0;
 	list-style: none;
 	max-height: 300px;
+
+	/***  Task 05 - Fix styling issue ***/
+	/*** Since there is already a max-height statment, I belive the right way to fix the issue is adding a scroll to the list. ***/
+	/*** That way I keep the originl design - the card remains the same size as it was before my changes, yet the UI doesn't look or feel "bugy" with lots of items. ***/
+	overflow-y: auto;
 }
 
 .todo-list li {

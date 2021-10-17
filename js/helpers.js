@@ -7,6 +7,8 @@ export function listen(target, type, callback, capture) {
 	target.addEventListener(type, callback, !!capture);
 }
 
+/***  Task 08 - Explaining this function: ***/ 
+/***  Binding events to a given DOM element (target), and calling the specific handler (given as an input as well) ***/ 
 export function delegateEvent(target, selector, type, handler, capture) {
 	const dispatchEvent = event => {
 		const targetElement = event.target;
@@ -24,5 +26,5 @@ export function delegateEvent(target, selector, type, handler, capture) {
 	listen(target, type, dispatchEvent, !!capture);
 }
 
-export const escapeForHTML = s => s.replace(/[&<]/g, c => c === '&' ? '&amp;' : '&lt;');
+export const escapeForHTML = s => s?.replace(/[&<]/g, c => c === '&' ? '&amp;' : '&lt;');
 

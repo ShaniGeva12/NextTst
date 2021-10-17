@@ -30,7 +30,6 @@ export default class Controller {
 
 	addItem(title) {
 		/***  Task 02 - prevent duplicate ToDo titles ***/ 
-		// console.log('current todos: ', todos);
 		let todos = this.store.getLocalStorage();
 		let found = todos.find(item => item.title == title);
 
@@ -39,8 +38,6 @@ export default class Controller {
 			let fixTitle = title;
 			fixTitle = fixTitle?.replace(/</g, "");
 			fixTitle = fixTitle?.replace(/>/g, "");
-			// console.log('title = ', title);
-			// console.log('fixTitle = ', fixTitle);
 
 			this.store.insert({
 				id: Date.now(),
@@ -112,7 +109,8 @@ export default class Controller {
 		}
 
 		this.store.count((total, active, completed) => {
-			this.view.setItemsLeft(total);
+			/***  Task 07 - current counter ***/ 
+			this.view.setItemsLeft(active);
 			this.view.setClearCompletedButtonVisibility(completed);
 
 			this.view.setCompleteAllCheckbox(completed === total);

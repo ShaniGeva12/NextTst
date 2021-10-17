@@ -76,7 +76,6 @@ export default class View {
 
   setItemComplete(id, completed) {
     const listItem = query(`[data-id="${id}"]`);
-    // console.log('listItem = ', listItem);
 
     if (!listItem) {
       return;
@@ -88,8 +87,10 @@ export default class View {
 
   editItemDone(id, title) {
     const listItem = query(`[data-id="${id}"]`);
-
     const input = query('input.edit', listItem);
+
+    const listItemChildren = listItem.children;
+    // let found = listItemChildren.find(input);
 
     listItem.removeChild(input);
     listItem.classList.remove('editing');
@@ -135,8 +136,14 @@ export default class View {
       }
     }, true);
 
+    /***  Task 04 - save & close edit mode on enter ***/ 
     delegateEvent(this.$todoList, 'li .edit', 'keypress', ({ target, keyCode }) => {
-    });
+        if (keyCode === 'Enter' || keyCode === 13) {
+          if (!target.dataset.iscanceled) {
+            handler(_itemId(target), target.value.trim());
+          }
+        }
+      }, true);
   }
 
   bindEditItemCancel(handler) {
